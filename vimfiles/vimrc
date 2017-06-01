@@ -37,7 +37,6 @@ Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp'] }
 call plug#end()
 
 set encoding=utf-8                         " Set file encoding
-" call pathogen#infect()                     " Call pathogen bundle manager
 set shortmess=atI                          " Remove the Hit-Enter Prompt"
 set langmenu=en                            " Change language to English
 set history=1000                           " Keep a longer history
