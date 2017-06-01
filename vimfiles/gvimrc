@@ -1,0 +1,24 @@
+colorscheme Tomorrow-Night
+set clipboard=unnamed
+set guioptions+=c
+set guioptions-=T
+set guioptions-=m
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+" winpos 10 10
+ " set sessionoptions+=winpos,winsize,resize
+
+if has('win32') || has('win64')
+  set lines=35
+  set columns=140
+  set guifont=Source\ Code\ Pro:h12,Consolas:h12
+else
+ set lines=40
+ set columns=130
+  set guifont=Roboto\ Mono\ for\ Powerline\ 11
+  " set guifont=Source\ Code\ Pro:h12,DejaVu\ Sans\ Mono\ 10
+  " set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+endif
+

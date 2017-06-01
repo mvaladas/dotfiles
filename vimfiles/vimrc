@@ -1,0 +1,225 @@
+" These are my personal options and should be taken with a grain of salt.
+" Author: Miguel Valadas
+
+" -------------------------------------------------------------------------------
+" General Options
+" --------------------------------------------------------------------------------
+set nocompatible " Remove backwards compatibility with vi
+filetype off
+
+" -------------------------------------------------------------------------------
+" Plugin Installation (with vim-plug)
+" --------------------------------------------------------------------------------
+" Check https://github.com/junegunn/vim-plug for vim-plug installation
+" instructions or just run the following command:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" Tagbar: Enables tree-outline of code with ctags
+Plug 'git://github.com/majutsushi/tagbar', {'on': 'TagbarOpenAutoClose'} 
+" Airline: Enable pretty bar on the bottom
+Plug 'git://github.com/vim-airline/vim-airline-themes.git'
+Plug 'git://github.com/bling/vim-airline.git'
+" Nerdtree: File browser
+Plug 'git://github.com/scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'} 
+" Nerdcommenter: Commenting on steroids
+Plug 'git://github.com/scrooloose/nerdcommenter.git'
+" Clang_Complete: Autocomple for C/C++ with clang
+Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp'] }
+
+" Plugin 'git://github.com/godlygeek/tabular.git'
+" Plugin 'git://github.com/Raimondi/delimitMate.git'
+" Plugin 'git://github.com/vim-scripts/OmniCppComplete.git'
+" Plugin 'git://github.com/tpope/vim-fugitive'
+" Plugin 'git://github.com/kien/ctrlp.vim.git'
+call plug#end()
+
+set encoding=utf-8                         " Set file encoding
+" call pathogen#infect()                     " Call pathogen bundle manager
+set shortmess=atI                          " Remove the Hit-Enter Prompt"
+set langmenu=en                            " Change language to English
+set history=1000                           " Keep a longer history
+set hidden                                 " Allow current buffer to be put in the background without writing to disk
+set wildmenu                               " Show <TAB> Command Completion
+ "set wildmode=longest                     " <TAB> completes only to the point of ambiguity
+set ttyfast                                " Enable fast terminals
+set formatoptions=qrn1
+
+" --------------------------------------------------------------------------------
+" Editor Options
+" --------------------------------------------------------------------------------
+filetype on                       " Enable filetype detection
+filetype plugin on                " Enable loading plugins for specific file type
+filetype indent on                " Load indent file for specific filetyp
+syntax on                         " Enable syntax highligh
+set scrolloff=3                   " Set Scroll offset to 3 lines
+" set t_Co=256                      " Set number of color
+colorscheme Tomorrow-Night-Bright " Set color scheme
+let g:airline_theme='tomorrow'    " Set color scheme
+if has('win32') || has('win64')
+  colorscheme blue                " Set color scheme for Windows
+endif
+set mouse=n                       " Activate Mouse on Normal Mode
+" set colorcolumn=80              " Highlight column 80
+set laststatus=2                  " Allways show the status line
+set number                        " Activate Line Numbers --
+set ruler                         " Activate Line,Column Status bar --
+set cursorline                    " Activate Line Highlighting --
+set linebreak                     " Break the line at word, not at character --
+set showcmd                       " Show command beeing written in status window --
+set nofoldenable                  " Disable Vim Folds
+set backspace=indent,eol,start    " Intuitive backspacing
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
+runtime macros/matchit.vim        " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
+set autoindent                    " Enable New Line Auto Indentation
+set nowrap
+
+" --------------------------------------------------------------------------------
+" Search Options
+" --------------------------------------------------------------------------------
+set hlsearch   " Highlight Search Matches --
+set incsearch  " Real-Time Searching --
+set nowrapscan " Do not go around file when searching --
+set ignorecase " Ignore case in searches --
+set smartcase  " Only ignore case if search term is all lower-case --
+set gdefault   " apply substutution globally --
+
+" --------------------------------------------------------------------------------
+" Custom Key Mappings
+" --------------------------------------------------------------------------------
+
+" Open $MYVIMRC
+:nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" Source $MYVIMRC
+:nnoremap <leader>sv :source $MYVIMRC<CR>
+
+"  Mappings for Ctrl-C Ctrl-V to copy/paste into the system register (windows
+"  clipboard). This enables copy-pasting on multiple instances of ssh vim.
+map <C-c> "+y
+map <C-v> "+p
+map <C-V> "+p
+
+" Up Arrow goes to previous buffer
+map <up> <ESC>:bp<RETURN>
+" Down Arrow goes to next buffer
+map <down> <ESC>:bn<RETURN>
+
+" Left Arrow Toggles NERD Tree
+map <left> <ESC>:NERDTreeToggle<RETURN>
+" Right Arrow Toggles Tagbar
+map <right> <ESC>:TagbarOpenAutoClose<RETURN>
+
+" Switch ' with ` so marks work better
+nnoremap ' `
+" Switch ' with ` so marks work better
+nnoremap ` '
+
+" Ident all file with <leader>i
+nnoremap <leader>i gg=G''
+
+" Toggle Invisible Characters with <leader>l
+nmap <leader>l :set list!<CR>
+set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:·
+
+" Traverse quickfix list with Shift-PgUp/PgDown
+" AKA: traverse make errors
+nmap <S-PageUp> :cp <CR>
+nmap <S-PageDown> :cn <CR>
+
+" <leader>1 Copies a word to the "w register
+" <leader>2 Pastes a word from the "w register
+" Quick copy paste 1-2: \1-\2
+nnoremap <leader>1 "wyiw
+nnoremap <leader>2 ciw<C-r>w<Esc>
+
+" Go the the display line below (fixes j with wrapped lines)
+nnoremap j gj
+" Go the the display line above (fixes k with wrapped lines)
+nnoremap k gk
+
+" Mapping for when in diff mode use the arrows
+if &diff
+    " previous diff
+    map <down> <ESC>]c
+    " next diff
+    map <up> <ESC>[c
+    " diff obtain
+    map <left> <ESC>do
+    " diff put
+    map <right> <ESC>dp
+endif
+
+" --------------------------------------------------------------------------------
+" Filetype Options
+" --------------------------------------------------------------------------------
+
+" C/CPP
+" ------------
+" If the file is a c/cpp, use <leader>s to jump to the source (cpp) file of
+" the same name
+autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
+" If the file is a c/cpp, use <leader>h to jump to the header (h) file of the
+" same name
+autocmd Filetype c,cpp nmap <buffer> <leader>h :e %:r.h<CR>
+
+" --------------------------------------------------------------------------------
+" Plugin Options
+" --------------------------------------------------------------------------------
+
+" NERDTree
+" ------------
+let NERDTreeIgnore=['^CVS$', '\~$']
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowBookmarks=1
+
+" When in NERDTREE buffer, up/down doesn't switch buffers
+autocmd FileType nerdtree noremap <buffer> <down> <down>
+autocmd FileType nerdtree noremap <buffer> <up> <up>
+
+" Tagbar
+" -----------
+let g:tagbar_iconchars = ['►', '▼']
+
+" When in tagbar buffer, up/down doesn't switch buffers
+autocmd FileType tagbar noremap <buffer> <down> <down>
+autocmd FileType tagbar noremap <buffer> <up> <up>
+autocmd FileType tagbar noremap <buffer> <right> :TagbarClose<RETURN>
+
+" CtrlP
+" -----------
+let g:ctrlp_map = '<C-Down>'
+let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_by_filename = 1
+
+" Airline
+" -----------
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+" Only enable special symbols if running in GVIM
+if has("gui_running")
+  let g:airline_powerline_fonts = 1
+endif
+
+" Delimitmate
+" -----------
+let delimitMate_autoclose = 0
+
+" Clang Complete
+" -----------
+let g:clang_library_path='/lhome1/mval/local/llvm/lib'
+
+" --------------------------------------------------------------------------------
+" Custom Functions
+" --------------------------------------------------------------------------------
+fun! Create_scratch_file() " Function that opens up the scratch buffer
+  :sp scratch
+  :set buftype=nofile
+  :set bufhidden=hide
+  :setlocal noswapfile
+endf
+command! Scratch call Create_scratch_file()
