@@ -28,6 +28,8 @@ Plug 'git://github.com/scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'}
 Plug 'git://github.com/scrooloose/nerdcommenter.git'
 " Clang_Complete: Autocomple for C/C++ with clang
 Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp'] }
+" Vimwiki: Wiki style writing with vim, only for .wiki files
+Plug 'git://github.com/vimwiki/vimwiki.git'
 
 " Plugin 'git://github.com/godlygeek/tabular.git'
 " Plugin 'git://github.com/Raimondi/delimitMate.git'
@@ -77,6 +79,7 @@ set softtabstop=4
 runtime macros/matchit.vim        " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
 set autoindent                    " Enable New Line Auto Indentation
 set nowrap
+set cm=blowfish2                  " When using encryption, use blowfish
 
 " --------------------------------------------------------------------------------
 " Search Options
@@ -99,9 +102,11 @@ set gdefault   " apply substutution globally --
 
 "  Mappings for Ctrl-C Ctrl-V to copy/paste into the system register (windows
 "  clipboard). This enables copy-pasting on multiple instances of ssh vim.
-map <C-c> "+y
+vmap <C-c> "+y
 map <C-v> "+p
 map <C-V> "+p
+imap <C-v> <C-r>+
+imap <C-V> <C-r>+
 
 " Up Arrow goes to previous buffer
 map <up> <ESC>:bp<RETURN>
@@ -211,6 +216,17 @@ let delimitMate_autoclose = 0
 " Clang Complete
 " -----------
 let g:clang_library_path='/lhome1/mval/local/llvm/lib'
+
+" Vim Wiki
+" -----------
+let wiki = {} " wiki config variable
+let wiki.path = '~/local/Wiki' " Wiki path
+let wiki.index = 'main' " main wiki name
+let wiki.nested_syntaxes = {'bash': 'sh', 'c++': 'cpp'} " snippets configuratsion
+let g:vimwiki_list = [wiki] " apply configuration
+
+let g:vimwiki_hl_cb_checked = 1 " Color checkboxes differently
+let g:vimwiki_hl_headers = 1 " color headers differently
 
 " --------------------------------------------------------------------------------
 " Custom Functions
