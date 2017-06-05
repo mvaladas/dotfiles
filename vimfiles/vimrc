@@ -1,15 +1,50 @@
 " These are my personal options and should be taken with a grain of salt.
 " Author: Miguel Valadas
 
-" -------------------------------------------------------------------------------
-" General Options
-" --------------------------------------------------------------------------------
-set nocompatible " Remove backwards compatibility with vi
-filetype off
+" Vim Options --------------------------{{{1
+set nocompatible                " Remove backwards compatibility with vi. Should be done first
 
-" -------------------------------------------------------------------------------
-" Plugin Installation (with vim-plug)
-" --------------------------------------------------------------------------------
+set encoding=utf-8              " Set file encoding
+set shortmess=atI               " Remove the Hit-Enter Prompt                                                                                                                                                           "
+set langmenu=en                 " Change language to English
+set history=1000                " Keep a longer history
+set hidden                      " Allow current buffer to be put in the background without writing to disk
+set wildmenu                    " Show <TAB> Command Completion
+                                " set wildmode=longest                                                                                                                                                                  " <TAB> completes only to the point of ambiguity
+set ttyfast                     " Enable fast terminals
+set formatoptions=qrn1
+
+filetype on                     " Enable filetype detection
+filetype plugin on              " Enable loading plugins for specific file type
+filetype indent on              " Load indent file for specific filetyp
+syntax on                       " Enable syntax highligh
+set scrolloff=3                 " Set Scroll offset to 3 lines
+" set t_Co=256                  " Set number of colors
+colorscheme Tomorrow-Night      " Set color scheme
+if has('win32') || has('win64')
+    colorscheme blue            " Set color scheme for Windows
+endif
+set mouse=n                     " Activate Mouse on Normal Mode
+" set colorcolumn=80            " Highlight column 80
+set laststatus=2                " Allways show the status line
+set number                      " Activate Line Numbers --
+set ruler                       " Activate Line,Column Status bar --
+set cursorline                  " Activate Line Highlighting --
+set linebreak                   " Break the line at word, not at character --
+set showcmd                     " Show command beeing written in status window --
+set nofoldenable                " Disable Vim Folds
+set backspace=indent,eol,start  " Intuitive backspacing
+set tabstop=4                   " Set how many spaces a tab is (visually)
+set shiftwidth=4                " How many spaces an ident is
+set expandtab                   " Turn tabs to spaces in insert mode
+set softtabstop=4               " How many spaces a tab counts for when editing
+runtime macros/matchit.vim      " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
+set autoindent                  " Enable New Line Auto Indentation
+set nowrap                      " disable wrapping
+set cm=blowfish2                " When using encryption, use blowfish
+
+
+" Plugin Installation (with vim-plug) --------------------------{{{1
 " Check https://github.com/junegunn/vim-plug for vim-plug installation
 " instructions or just run the following command:
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -29,61 +64,16 @@ Plug 'git://github.com/scrooloose/nerdcommenter.git'
 " Clang_Complete: Autocomple for C/C++ with clang
 Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp'] }
 " Vimwiki: Wiki style writing with vim, only for .wiki files
-Plug 'git://github.com/vimwiki/vimwiki.git'
-
-" Plugin 'git://github.com/godlygeek/tabular.git'
+Plug 'git://github.com/vimwiki/vimwiki.git', {'on': 'VimwikiIndex'}
+" Tabular: Tabularizes stuff
+Plug 'git://github.com/godlygeek/tabular.git'
 " Plugin 'git://github.com/Raimondi/delimitMate.git'
 " Plugin 'git://github.com/vim-scripts/OmniCppComplete.git'
 " Plugin 'git://github.com/tpope/vim-fugitive'
 " Plugin 'git://github.com/kien/ctrlp.vim.git'
 call plug#end()
 
-set encoding=utf-8                         " Set file encoding
-set shortmess=atI                          " Remove the Hit-Enter Prompt"
-set langmenu=en                            " Change language to English
-set history=1000                           " Keep a longer history
-set hidden                                 " Allow current buffer to be put in the background without writing to disk
-set wildmenu                               " Show <TAB> Command Completion
- "set wildmode=longest                     " <TAB> completes only to the point of ambiguity
-set ttyfast                                " Enable fast terminals
-set formatoptions=qrn1
-
-" --------------------------------------------------------------------------------
-" Editor Options
-" --------------------------------------------------------------------------------
-filetype on                       " Enable filetype detection
-filetype plugin on                " Enable loading plugins for specific file type
-filetype indent on                " Load indent file for specific filetyp
-syntax on                         " Enable syntax highligh
-set scrolloff=3                   " Set Scroll offset to 3 lines
-" set t_Co=256                      " Set number of color
-colorscheme Tomorrow-Night-Bright " Set color scheme
-let g:airline_theme='tomorrow'    " Set color scheme
-if has('win32') || has('win64')
-  colorscheme blue                " Set color scheme for Windows
-endif
-set mouse=n                       " Activate Mouse on Normal Mode
-" set colorcolumn=80              " Highlight column 80
-set laststatus=2                  " Allways show the status line
-set number                        " Activate Line Numbers --
-set ruler                         " Activate Line,Column Status bar --
-set cursorline                    " Activate Line Highlighting --
-set linebreak                     " Break the line at word, not at character --
-set showcmd                       " Show command beeing written in status window --
-set nofoldenable                  " Disable Vim Folds
-set backspace=indent,eol,start    " Intuitive backspacing
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set softtabstop=4
-runtime macros/matchit.vim        " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
-set autoindent                    " Enable New Line Auto Indentation
-set nowrap
-set cm=blowfish2                  " When using encryption, use blowfish
-
-" --------------------------------------------------------------------------------
-" Search Options
-" --------------------------------------------------------------------------------
+" Search Options --------------------------{{{1
 set hlsearch   " Highlight Search Matches --
 set incsearch  " Real-Time Searching --
 set nowrapscan " Do not go around file when searching --
@@ -91,9 +81,7 @@ set ignorecase " Ignore case in searches --
 set smartcase  " Only ignore case if search term is all lower-case --
 set gdefault   " apply substutution globally --
 
-" --------------------------------------------------------------------------------
-" Custom Key Mappings
-" --------------------------------------------------------------------------------
+" Custom Key Mappings --------------------------{{{1
 
 " Open $MYVIMRC
 :nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -158,9 +146,7 @@ if &diff
     map <right> <ESC>dp
 endif
 
-" --------------------------------------------------------------------------------
-" Filetype Options
-" --------------------------------------------------------------------------------
+" Filetype Options --------------------------{{{1
 
 " C/CPP
 " ------------
@@ -171,9 +157,13 @@ autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
 " same name
 autocmd Filetype c,cpp nmap <buffer> <leader>h :e %:r.h<CR>
 
-" --------------------------------------------------------------------------------
-" Plugin Options
-" --------------------------------------------------------------------------------
+" Vimscript file settings 
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" Plugin Options --------------------------{{{1
 
 " NERDTree
 " ------------
@@ -202,11 +192,12 @@ let g:ctrlp_by_filename = 1
 
 " Airline
 " -----------
+let g:airline_theme='tomorrow'  " Set color scheme for airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 " Only enable special symbols if running in GVIM
 if has("gui_running")
-  let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 1
 endif
 
 " Delimitmate
@@ -215,6 +206,7 @@ let delimitMate_autoclose = 0
 
 " Clang Complete
 " -----------
+" Define location o clang lib
 let g:clang_library_path='/lhome1/mval/local/llvm/lib'
 
 " Vim Wiki
@@ -228,13 +220,14 @@ let g:vimwiki_list = [wiki] " apply configuration
 let g:vimwiki_hl_cb_checked = 1 " Color checkboxes differently
 let g:vimwiki_hl_headers = 1 " color headers differently
 
-" --------------------------------------------------------------------------------
-" Custom Functions
-" --------------------------------------------------------------------------------
+" Abbreviations --------------------------{{{1
+":iabbrev @@ some@stuff.com
+
+" Custom Functions --------------------------{{{1
 fun! Create_scratch_file() " Function that opens up the scratch buffer
-  :sp scratch
-  :set buftype=nofile
-  :set bufhidden=hide
-  :setlocal noswapfile
+    :sp scratch
+    :set buftype=nofile
+    :set bufhidden=hide
+    :setlocal noswapfile
 endf
 command! Scratch call Create_scratch_file()
