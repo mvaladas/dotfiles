@@ -10,7 +10,7 @@ set langmenu=en                 " Change language to English
 set history=1000                " Keep a longer history
 set hidden                      " Allow current buffer to be put in the background without writing to disk
 set wildmenu                    " Show <TAB> Command Completion
-                                " set wildmode=longest                                                                                                                                                                  " <TAB> completes only to the point of ambiguity
+" set wildmode=longest                                                                                                                                                                  " <TAB> completes only to the point of ambiguity
 set ttyfast                     " Enable fast terminals
 set formatoptions=qrn1
 
@@ -150,16 +150,20 @@ endif
 
 " C/CPP
 " ------------
-" If the file is a c/cpp, use <leader>s to jump to the source (cpp) file of
-" the same name
-autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
-" If the file is a c/cpp, use <leader>h to jump to the header (h) file of the
-" same name
-autocmd Filetype c,cpp nmap <buffer> <leader>h :e %:r.h<CR>
+augroup filetype_cpp
+    autocmd! " clear autogroup of commands
+    " If the file is a c/cpp, use <leader>s to jump to the source (cpp) file of
+    " the same name
+    autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
+    " If the file is a c/cpp, use <leader>h to jump to the header (h) file of the
+    " same name
+    autocmd Filetype c,cpp nmap <buffer> <leader>h :e %:r.h<CR>
+augroup END
 
-" Vimscript file settings 
+" Vimscript
+" ------------
 augroup filetype_vim
-    autocmd!
+    autocmd! " clear autogroup of commands
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
@@ -171,18 +175,26 @@ let NERDTreeIgnore=['^CVS$', '\~$']
 let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks=1
 
-" When in NERDTREE buffer, up/down doesn't switch buffers
-autocmd FileType nerdtree noremap <buffer> <down> <down>
-autocmd FileType nerdtree noremap <buffer> <up> <up>
+augroup filetype_nerdtree
+    autocmd! " clear autogroup of commands
+    " When in NERDTREE buffer, up/down doesn't switch buffers
+    autocmd FileType nerdtree noremap <buffer> <down> <down>
+    autocmd FileType nerdtree noremap <buffer> <up> <up>
+augroup END
+
 
 " Tagbar
 " -----------
 let g:tagbar_iconchars = ['►', '▼']
 
-" When in tagbar buffer, up/down doesn't switch buffers
-autocmd FileType tagbar noremap <buffer> <down> <down>
-autocmd FileType tagbar noremap <buffer> <up> <up>
-autocmd FileType tagbar noremap <buffer> <right> :TagbarClose<RETURN>
+augroup filetype_tagbar
+    autocmd! " clear autogroup of commands
+    " When in tagbar buffer, up/down doesn't switch buffers
+    autocmd FileType tagbar noremap <buffer> <down> <down>
+    autocmd FileType tagbar noremap <buffer> <up> <up>
+    autocmd FileType tagbar noremap <buffer> <right> :TagbarClose<RETURN>
+augroup END
+
 
 " CtrlP
 " -----------
@@ -230,4 +242,4 @@ fun! Create_scratch_file() " Function that opens up the scratch buffer
     :set bufhidden=hide
     :setlocal noswapfile
 endf
-command! Scratch call Create_scratch_file()
+command! Scratch call Create_scratch_file()"}}}
