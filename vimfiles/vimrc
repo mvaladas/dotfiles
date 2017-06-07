@@ -151,7 +151,7 @@ endif
 " C/CPP
 " ------------
 augroup filetype_cpp
-    autocmd! " clear autogroup of commands
+    autocmd!
     " If the file is a c/cpp, use <leader>s to jump to the source (cpp) file of
     " the same name
     autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
@@ -163,7 +163,7 @@ augroup END
 " Vimscript
 " ------------
 augroup filetype_vim
-    autocmd! " clear autogroup of commands
+    autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
@@ -176,7 +176,7 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks=1
 
 augroup filetype_nerdtree
-    autocmd! " clear autogroup of commands
+    autocmd!
     " When in NERDTREE buffer, up/down doesn't switch buffers
     autocmd FileType nerdtree noremap <buffer> <down> <down>
     autocmd FileType nerdtree noremap <buffer> <up> <up>
@@ -188,7 +188,7 @@ augroup END
 let g:tagbar_iconchars = ['►', '▼']
 
 augroup filetype_tagbar
-    autocmd! " clear autogroup of commands
+    autocmd!
     " When in tagbar buffer, up/down doesn't switch buffers
     autocmd FileType tagbar noremap <buffer> <down> <down>
     autocmd FileType tagbar noremap <buffer> <up> <up>
