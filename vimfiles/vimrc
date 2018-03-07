@@ -2,46 +2,53 @@
 " Author: Miguel Valadas
 
 " Vim Options --------------------------{{{1
-set nocompatible                " Remove backwards compatibility with vi. Should be done first
+set nocompatible                         " Remove backwards compatibility with vi. Should be done first
 
-set encoding=utf-8              " Set file encoding
-set shortmess=atI               " Remove the Hit-Enter Prompt                                                                                                                                                           "
-set langmenu=en                 " Change language to English
-set history=1000                " Keep a longer history
-set hidden                      " Allow current buffer to be put in the background without writing to disk
-set wildmenu                    " Show <TAB> Command Completion
-" set wildmode=longest                                                                                                                                                                  " <TAB> completes only to the point of ambiguity
-set ttyfast                     " Enable fast terminals
-set formatoptions=qrn1
+set encoding=utf-8                       " Set file encoding to UTF-8
+set shortmess=atI                        " Remove the Hit-Enter Prompt
+set langmenu=en                          " Change language to English
+set history=1000                         " Keep a longer history
 
-filetype on                     " Enable filetype detection
-filetype plugin on              " Enable loading plugins for specific file type
-filetype indent on              " Load indent file for specific filetyp
-syntax on                       " Enable syntax highligh
-set scrolloff=3                 " Set Scroll offset to 3 lines
-" set t_Co=256                  " Set number of colors
-colorscheme Tomorrow-Night      " Set color scheme
-if has('win32') || has('win64')
-    colorscheme blue            " Set color scheme for Windows
+if !isdirectory("/home/mval/local/.vim-undo-dir") " Use persistant Undos
+    call mkdir("/home/mval/local/.vim-undo-dir", "", 0700)
 endif
-set mouse=n                     " Activate Mouse on Normal Mode
-" set colorcolumn=80            " Highlight column 80
-set laststatus=2                " Allways show the status line
-set number                      " Activate Line Numbers --
-set ruler                       " Activate Line,Column Status bar --
-set cursorline                  " Activate Line Highlighting --
-set linebreak                   " Break the line at word, not at character --
-set showcmd                     " Show command beeing written in status window --
-set nofoldenable                " Disable Vim Folds
-set backspace=indent,eol,start  " Intuitive backspacing
-set tabstop=4                   " Set how many spaces a tab is (visually)
-set shiftwidth=4                " How many spaces an ident is
-set expandtab                   " Turn tabs to spaces in insert mode
-set softtabstop=4               " How many spaces a tab counts for when editing
-runtime macros/matchit.vim      " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
-set autoindent                  " Enable New Line Auto Indentation
-set nowrap                      " disable wrapping
-set cm=blowfish2                " When using encryption, use blowfish
+set undodir=~/local/.vim-undo-dir
+set undofile
+
+set hidden                        " Allow current buffer to be put in the background without writing to disk
+set wildmenu                      " Show <TAB> Command Completion
+" set wildmode=longest            " <TAB> completes only to the point of ambiguity
+set ttyfast                       " Enable fast terminals
+set formatoptions=qrn1            " Some text insertion options like continue comments in newline, etc.
+
+filetype on                       " Enable filetype detection
+filetype plugin on                " Enable loading plugins for specific file type
+filetype indent on                " Load indent file for specific filetyp
+syntax on                         " Enable syntax highligh
+set scrolloff=3                   " Set Scroll offset to 3 lines
+set t_Co=256                      " Set number of colors
+colorscheme Tomorrow-Night-Bright " Set color scheme
+if has('win32') || has('win64')
+    colorscheme blue              " Set color scheme for Windows
+endif
+set mouse=n                       " Activate Mouse on Normal Mode
+" set colorcolumn=80           " Highlight column 80
+set laststatus=2               " Allways show the status line
+set number                     " Activate Line Numbers --
+set ruler                      " Activate Line,Column Status bar --
+set cursorline                 " Activate Line Highlighting --
+set linebreak                  " Break the line at word, not at character --
+set showcmd                    " Show command beeing written in status window --
+set nofoldenable               " Disable Vim Folds by default
+set backspace=indent,eol,start " Intuitive backspacing
+set tabstop=4                  " Set how many spaces a tab is (visually)
+set shiftwidth=4               " How many spaces an ident is
+set expandtab                  " Turn tabs to spaces in insert mode
+set softtabstop=4              " How many spaces a tab counts for when editing
+runtime macros/matchit.vim     " The % key will switch between opening and closing brackets. By sourcing matchit.vim, it can also switch among e.g. if/elsif/else/end, between opening and closing XML tags, and more.
+set autoindent                 " Enable New Line Auto Indentation
+set nowrap                     " disable wrapping
+"set cm=blowfish2              " When using encryption, use blowfish
 
 
 " Plugin Installation (with vim-plug) --------------------------{{{1
@@ -51,26 +58,32 @@ set cm=blowfish2                " When using encryption, use blowfish
 
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
-
+" Gundo: Enable undo graphs
+Plug 'git://github.com/sjl/gundo.vim.git'
 " Tagbar: Enables tree-outline of code with ctags
-Plug 'git://github.com/majutsushi/tagbar', {'on': 'TagbarOpenAutoClose'} 
+" Plug 'git://github.com/majutsushi/tagbar', {'on': 'TagbarOpenAutoClose'} 
+Plug 'git://github.com/majutsushi/tagbar'
 " Airline: Enable pretty bar on the bottom
 Plug 'git://github.com/vim-airline/vim-airline-themes.git'
 Plug 'git://github.com/bling/vim-airline.git'
 " Nerdtree: File browser
-Plug 'git://github.com/scrooloose/nerdtree.git', {'on': 'NERDTreeToggle'} 
+Plug 'git://github.com/scrooloose/nerdtree.git'
+Plug 'git://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git'
 " Nerdcommenter: Commenting on steroids
 Plug 'git://github.com/scrooloose/nerdcommenter.git'
 " Clang_Complete: Autocomple for C/C++ with clang
-Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp'] }
+Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp', 'h'] }
 " Vimwiki: Wiki style writing with vim, only for .wiki files
-Plug 'git://github.com/vimwiki/vimwiki.git', {'on': 'VimwikiIndex'}
+" Plug 'git://github.com/vimwiki/vimwiki.git', {'on': 'VimwikiIndex'}
 " Tabular: Tabularizes stuff
 Plug 'git://github.com/godlygeek/tabular.git'
 " Plugin 'git://github.com/Raimondi/delimitMate.git'
 " Plugin 'git://github.com/vim-scripts/OmniCppComplete.git'
-" Plugin 'git://github.com/tpope/vim-fugitive'
+" VimFugitive: Git Integration
+Plug 'git://github.com/tpope/vim-fugitive'
 " Plugin 'git://github.com/kien/ctrlp.vim.git'
+" Devicons: Pretty glyphs for airline and NERDtree
+Plug 'git://github.com/ryanoasis/vim-devicons'
 call plug#end()
 
 " Search Options --------------------------{{{1
@@ -141,9 +154,9 @@ if &diff
     " next diff
     map <up> <ESC>[c
     " diff obtain
-    map <left> <ESC>do
+    map <right> <ESC>do
     " diff put
-    map <right> <ESC>dp
+    map <left> <ESC>dp
 endif
 
 " Filetype Options --------------------------{{{1
@@ -151,7 +164,7 @@ endif
 " C/CPP
 " ------------
 augroup filetype_cpp
-    autocmd! " clear autogroup of commands
+    autocmd!
     " If the file is a c/cpp, use <leader>s to jump to the source (cpp) file of
     " the same name
     autocmd Filetype c,cpp nmap <buffer> <leader>s :e %:r.cpp<CR>
@@ -163,11 +176,42 @@ augroup END
 " Vimscript
 " ------------
 augroup filetype_vim
-    autocmd! " clear autogroup of commands
+    autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+    set foldenable
 augroup END
 
 " Plugin Options --------------------------{{{1
+
+" Vim DevIcons
+" -----------
+"let g:webdevicons_enable_nerdtree = 1
+"let g:webdevicons_enable_airline_tabline = 1
+"let g:webdevicons_enable_airline_statusline = 1
+"let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+"let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+
+" Glyph Config
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.mdxml$\|.*\.uml$'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['CMakeLists.txt$'] = ''
+
+
+" NERDTree Syntax Highlight
+" -----------
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
+let s:yellow = "F09F17"
+let s:darkBlue = "44788E"
+
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['mdxml'] = s:darkBlue
+let g:NERDTreeExtensionHighlightColor['uml'] = s:yellow
 
 " NERDTree
 " ------------
@@ -176,7 +220,7 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks=1
 
 augroup filetype_nerdtree
-    autocmd! " clear autogroup of commands
+    autocmd!
     " When in NERDTREE buffer, up/down doesn't switch buffers
     autocmd FileType nerdtree noremap <buffer> <down> <down>
     autocmd FileType nerdtree noremap <buffer> <up> <up>
@@ -188,7 +232,7 @@ augroup END
 let g:tagbar_iconchars = ['►', '▼']
 
 augroup filetype_tagbar
-    autocmd! " clear autogroup of commands
+    autocmd!
     " When in tagbar buffer, up/down doesn't switch buffers
     autocmd FileType tagbar noremap <buffer> <down> <down>
     autocmd FileType tagbar noremap <buffer> <up> <up>
@@ -206,11 +250,12 @@ let g:ctrlp_by_filename = 1
 " -----------
 let g:airline_theme='tomorrow'  " Set color scheme for airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 " Only enable special symbols if running in GVIM
-if has("gui_running")
+"if has("gui_running")
     let g:airline_powerline_fonts = 1
-endif
+"endif
 
 " Delimitmate
 " -----------
@@ -220,6 +265,7 @@ let delimitMate_autoclose = 0
 " -----------
 " Define location o clang lib
 let g:clang_library_path='/lhome1/mval/local/llvm/lib'
+set completeopt-=preview
 
 " Vim Wiki
 " -----------
@@ -243,3 +289,13 @@ fun! Create_scratch_file() " Function that opens up the scratch buffer
     :setlocal noswapfile
 endf
 command! Scratch call Create_scratch_file()"}}}
+" TMUX Fixes --------------------------{{{1
+" -----------
+" Handle tmux $TERM quirks in vim
+if $TERM =~ '^screen-256color'
+    set ttymouse=xterm2
+    map <Esc>OH <Home>
+    map! <Esc>OH <Home>
+    map <Esc>OF <End>
+    map! <Esc>OF <End>
+endif
