@@ -11,3 +11,5 @@ On the very first run execute the command:
 
 `:PlugInstall`
 
+# Fonts
+You will need to install a NERD Font to use the glyphs properly
