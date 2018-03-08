@@ -1,6 +1,42 @@
 " These are my personal options and should be taken with a grain of salt.
 " Author: Miguel Valadas
 
+" Plugin Installation (with vim-plug) --------------------------{{{1
+" Check https://github.com/junegunn/vim-plug for vim-plug installation
+" instructions or just run the following command:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+    " Tommorow: Tommorow Color Scheme
+        Plug 'git://github.com/chriskempson/tomorrow-theme.git', {'rtp': 'vim'}
+    " Vim One: Color Scheme
+        Plug 'https://github.com/rakr/vim-one.git'
+        let g:one_allow_italics = 1    " allow one colorscheme italics
+    " Gundo: Enable undo graphs
+        Plug 'git://github.com/sjl/gundo.vim.git'
+    " Tagbar: Enables tree-outline of code with ctags
+        Plug 'git://github.com/majutsushi/tagbar'
+    " Airline: Enable pretty bar on the bottom
+        Plug 'git://github.com/vim-airline/vim-airline-themes.git'
+        Plug 'git://github.com/bling/vim-airline.git'
+    " Nerdtree: File browser
+        Plug 'git://github.com/scrooloose/nerdtree.git'
+        Plug 'git://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git'
+    " Nerdcommenter: Commenting on steroids
+        Plug 'git://github.com/scrooloose/nerdcommenter.git'
+    " Clang_Complete: Autocomple for C/C++ with clang
+        Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp', 'h'] }
+    " Tabular: Tabularizes stuff
+        Plug 'git://github.com/godlygeek/tabular.git'
+    " VimFugitive: Git Integration
+        " Plug 'git://github.com/tpope/vim-fugitive'
+    " Git Gutter: Git Gutter + and - symbols
+        Plug 'git://github.com/airblade/vim-gitgutter.git'
+    " Devicons: Pretty glyphs for airline and NERDtree
+        Plug 'git://github.com/ryanoasis/vim-devicons'
+call plug#end()
+
 " Vim Options --------------------------{{{1
 set nocompatible                         " Remove backwards compatibility with vi. Should be done first
 
@@ -15,23 +51,21 @@ endif
 set undodir=~/local/.vim-undo-dir
 set undofile
 
-set hidden                        " Allow current buffer to be put in the background without writing to disk
-set wildmenu                      " Show <TAB> Command Completion
-" set wildmode=longest            " <TAB> completes only to the point of ambiguity
-set ttyfast                       " Enable fast terminals
-set formatoptions=qrn1            " Some text insertion options like continue comments in newline, etc.
+set hidden                     " Allow current buffer to be put in the background without writing to disk
+set wildmenu                   " Show <TAB> Command Completion
+" set wildmode=longest         " <TAB> completes only to the point of ambiguity
+set ttyfast                    " Enable fast terminals
+set formatoptions=qrn1         " Some text insertion options like continue comments in newline, etc.
 
-filetype on                       " Enable filetype detection
-filetype plugin on                " Enable loading plugins for specific file type
-filetype indent on                " Load indent file for specific filetyp
-syntax on                         " Enable syntax highligh
-set scrolloff=3                   " Set Scroll offset to 3 lines
-set t_Co=256                      " Set number of colors
-colorscheme Tomorrow-Night-Bright " Set color scheme
-if has('win32') || has('win64')
-    colorscheme blue              " Set color scheme for Windows
-endif
-set mouse=n                       " Activate Mouse on Normal Mode
+filetype on                    " Enable filetype detection
+filetype plugin on             " Enable loading plugins for specific file type
+filetype indent on             " Load indent file for specific filetyp
+syntax on                      " Enable syntax highligh
+set scrolloff=3                " Set Scroll offset to 3 lines
+set t_Co=256                   " Set number of colors
+set background=dark            " set background type
+colorscheme one-dark           " Set the colorscheme
+set mouse=n                    " Activate Mouse on Normal Mode
 " set colorcolumn=80           " Highlight column 80
 set laststatus=2               " Allways show the status line
 set number                     " Activate Line Numbers --
@@ -49,42 +83,6 @@ runtime macros/matchit.vim     " The % key will switch between opening and closi
 set autoindent                 " Enable New Line Auto Indentation
 set nowrap                     " disable wrapping
 "set cm=blowfish2              " When using encryption, use blowfish
-
-
-" Plugin Installation (with vim-plug) --------------------------{{{1
-" Check https://github.com/junegunn/vim-plug for vim-plug installation
-" instructions or just run the following command:
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-" Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
-" Gundo: Enable undo graphs
-Plug 'git://github.com/sjl/gundo.vim.git'
-" Tagbar: Enables tree-outline of code with ctags
-" Plug 'git://github.com/majutsushi/tagbar', {'on': 'TagbarOpenAutoClose'} 
-Plug 'git://github.com/majutsushi/tagbar'
-" Airline: Enable pretty bar on the bottom
-Plug 'git://github.com/vim-airline/vim-airline-themes.git'
-Plug 'git://github.com/bling/vim-airline.git'
-" Nerdtree: File browser
-Plug 'git://github.com/scrooloose/nerdtree.git'
-Plug 'git://github.com/tiagofumo/vim-nerdtree-syntax-highlight.git'
-" Nerdcommenter: Commenting on steroids
-Plug 'git://github.com/scrooloose/nerdcommenter.git'
-" Clang_Complete: Autocomple for C/C++ with clang
-Plug 'git://github.com/Rip-Rip/clang_complete.git', {'for': ['c', 'cpp', 'h'] }
-" Vimwiki: Wiki style writing with vim, only for .wiki files
-" Plug 'git://github.com/vimwiki/vimwiki.git', {'on': 'VimwikiIndex'}
-" Tabular: Tabularizes stuff
-Plug 'git://github.com/godlygeek/tabular.git'
-" Plugin 'git://github.com/Raimondi/delimitMate.git'
-" Plugin 'git://github.com/vim-scripts/OmniCppComplete.git'
-" VimFugitive: Git Integration
-Plug 'git://github.com/tpope/vim-fugitive'
-" Plugin 'git://github.com/kien/ctrlp.vim.git'
-" Devicons: Pretty glyphs for airline and NERDtree
-Plug 'git://github.com/ryanoasis/vim-devicons'
-call plug#end()
 
 " Search Options --------------------------{{{1
 set hlsearch   " Highlight Search Matches --
@@ -178,7 +176,7 @@ augroup END
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
-    set foldenable
+    "set foldenable
 augroup END
 
 " Plugin Options --------------------------{{{1
@@ -248,7 +246,7 @@ let g:ctrlp_by_filename = 1
 
 " Airline
 " -----------
-let g:airline_theme='tomorrow'  " Set color scheme for airline
+let g:airline_theme='onedark'  " Set color scheme for airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
